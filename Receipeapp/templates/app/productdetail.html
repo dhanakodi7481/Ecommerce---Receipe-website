@@ -1,0 +1,55 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Details{% endblock title %}
+
+{% block main-content %}
+  <div class="container">
+    <div class="row flex justify-content-between">
+      <div class="img2 col-lg-5 mt-5">
+        <img src="{{ catview.product_image.url }}" class="image col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center" style="border-radius: 10px; width: 450px; height: 350px;" alt="">
+      </div>
+      <div class="productdetail col-lg-5">
+        <h1 style="font-family: Georgia; font-size:33px;font-weight:bold;color: orangered;margin-top: 20px;text-transform:uppercase;">{{catview.title}}</h1>
+        <h5 style="font-weight: bold; margin-top: 20px;">Rs.{{catview.selling_price}}/-</h5>
+        <del><h6>Rs.{{catview.discounted_price}}/-</h6></del>
+        <br>
+        <h5 style="font-family: Georgia;font-weight: bold; color: orangered;">Preparation Time</h5>
+        <ul class="fs-5">
+          <li style="font-size: 15px; font-weight: bold;">{{catview.preparation_time}}</li>
+        </ul>
+        <br>
+        <h5 style="font-family: Georgia;font-weight: bold; color: orangered;">Product Features</h5>
+        <ul class="fs-5">
+          <li style="font-size: 17px; text-align: justify">{{catview.description}}</li>
+        </ul>
+        <br>
+
+        <br>
+       
+
+
+        <div class="button-row flex">
+            <form action="/add-to-cart" class="d-inline">
+              <input type="hidden" name="prod_id" value="{{catview.id}}">
+
+              <button type="submit" class="btn px-5 py-2" style="background-color: orangered;color: white;font-size: 14px;outline: none; border: none; border-radius: 5px; font-weight:bold">Add to Cart</button>
+            </form>
+
+            <form action="/add-to-cart" class="d-inline">
+              <input type="hidden" name="prod_id" value="{{catview.id}}">
+
+              <button type="submit" class="btn px-5 py-2" style="background-color: black;color: white;font-size: 14px;outline: none; border: none; border-radius: 5px; font-weight: bold;">Buy Now</button>
+            </form>
+
+            <a href="{% url 'add_to_wishlist' catview.pk %}" class= "btn px-4 py-2" style="background-color: orangered; color: white;font-size: 14px;outline: none; border: none; border-radius: 5px; font-weight: bold;  margin: 10px"><i class="fas fa-heart fa-lg"></i></a>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <h5 style="font-family: Georgia;font-weight: bold; color: orangered;padding-left: 60px; margin-top:-200px;">Ingredients</h5>
+    <ul class="fs-5" style="font-size: 15px; width: 50%; text-align: justify; padding-left: 60px;">
+      <li style="font-size: 17px;">{{catview.ingredients}}</li>
+    </ul>
+  </div>
+{% endblock main-content %}

@@ -1,0 +1,34 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
+{% block main-content %}
+<div class="row my-3">
+    <div class="col-sm-6 offset-sm-3">
+        <h3 style="font-family: Georgia; color: orangered; font-weight: bold;">Customer Login</h3>
+      <hr>
+      <form action="" method="post" novalidate class="shadow p-5" style="font-size: 15px;color: black;font-weight: bold;">
+        {% csrf_token %}
+        {% for fm in form %}
+          {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors| striptags}}</small>
+          <br>
+        {% endfor %}
+        
+        <small><a href="{% url 'password_reset'%}" style="color:orangered;text-decoration: none;font-weight: bold;">Forgot Password</a></small>
+        <br><br>
+        <input type="submit" value="login" class="btn btn-primary" style="background-color: orangered;outline: none;padding: 5px; font-size: 12px; width: 70px;border: none;">
+        <div class="text-center text-primary fw-bold" style="font-weight: bold; ">
+            New User ? <a href="{% url 'customerregistration' %}" style="color:orangered;text-decoration: none;font-weight: bold; ">Create an Account</a>
+        </div>
+
+        {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+          <p class="alert alert-danger my3">{{error}}</p>
+          {% endfor %}
+        {% endif %}
+
+
+      </form>
+    </div>
+</div>
+{% endblock main-content %}

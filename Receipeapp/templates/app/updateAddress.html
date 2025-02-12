@@ -1,0 +1,34 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %} Profile {% endblock title %}
+
+{% block main-content %} 
+<div class="container my-5">
+    <div class="row" style="margin-top: -10px;">
+        <h3 style="font-family: Georgia; color: black; font-weight: bold; font-size: 30px;">Welcome <span class="text-capitalize" style="font-family: Georgia; color: orangered; font-weight: bold; font-size: 30px;">{{request.user}}</span></h3>
+        <br> <br> <br>
+
+    <div class="col-sm-8 offset-sm-1">
+
+        <form action="" method="post" style="font-size: 15px;color: black;font-weight: bold;">
+            {% csrf_token %}
+            {% for fm in form %}
+                {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors| striptags}}</small>
+                <br>
+            {% endfor %}
+
+            <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary" style="background-color: orangered;outline: none;padding: 5px; font-size: 14px; width: 90px; font-weight: bold; border: none;">Update</button>
+                    <a href="{% url 'address' %}"  type="button" class="btn btn-primary" style="background-color:black;outline: none; padding: 5px; font-size: 14px; width: 90px; font-weight: bold; border: none;color: white; text-decoration: none;">Back</a>
+            </div>
+        
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+
+        </form>
+    </div>   
+</div>
+{% endblock main-content %}

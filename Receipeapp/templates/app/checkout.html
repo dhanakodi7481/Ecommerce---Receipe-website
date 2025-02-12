@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Checkout {% endblock title %}
+{% block main-content %}
+<div class="container">
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+    {% endif %}
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h4 style="font-family: Georgia; color: black; font-weight: bold;">Order Summary</h4>
+            <hr>
+            {% for item in cart_items %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 style="font-family: Georgia; color: orangered; font-weight: bold;">Product: {{item.product.title}}</h5>
+                        <p>Quantity: {{item.quantity}}</p>
+                        <p class="fw-bold">Price: {{item.product.discounted_price}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <p class="fw-bold">Total Cost + Rs. 40 = {{totalamount}}</p>
+            <br><br>
+            <h4 style="font-family: Georgia; color: orangered; font-weight: bold;">Terms and Conditions</h4>
+            <p style="text-align:justify; font-size: 15px;">
+                The Terms and Conditions of the Home Foodies website govern the use of our platform, ensuring a safe and seamless experience for users. By accessing Home Foodies, users agree to abide by guidelines related to account registration, ordering, payments, cancellations, and refunds. The website strictly prohibits unauthorized activities and reserves rights over all content and intellectual property. Home Foodies is not responsible for third-party links, service disruptions, or indirect damages. Terms may be updated periodically, and continued use implies acceptance of changes. For any queries, users can contact customer support.</p>
+        </div>
+        <div class="col-sm-4 offset-sm-1">
+            <h4 style="font-family: Georgia; color: orangered; font-weight: bold;">Details</h4>
+            <hr>
+            <form action="" method="post" id="myform">
+                {% csrf_token %}
+                {% for ad in add %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 style="font-family: Georgia; color: orangered; font-weight: bold;">{{ad.name}}</h5>
+                        <p style="color:black;">Mobile: {{ad.mobile}}</p>
+                        <p style="color: black;">{{ad.locality}} {{ad.city}} {{ad.state}} -{{ad.zipcode}}</p>
+                    </div>
+                </div>
+                <div class="form-check mt-2 mb-5">
+                    <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}">
+                    <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+                        Address: {{forloop.counter}} </label>
+                </div>
+                {% endfor %}
+
+
+                <div class="form-check mb-4">
+                    <label for="totamount" class="form-label" style="font-family: Georgia; color: black; font-weight: bold; font-size: 20px;">Total Amount</label>
+                    <input type="number" class="form-control" name="totamount" value={{totalamount}} readonly>
+                </div>
+                <div class="text-end">
+                    <div class="d-grid"><a href="{% url 'order-success' %}" class="btn btn-primary" style="background-color: orangered;color: white;font-size: 15px;outline: none; border: none; border-radius: 5px; font-weight: bold;">Place Order</a>
+                </div>
+            </form>                                          
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
